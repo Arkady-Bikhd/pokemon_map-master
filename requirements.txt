@@ -1,0 +1,4 @@
+Django==4.1.*
+python-dotenv==0.15.*
+folium==0.11.*
+Pillow==9.4.*  # required by Windows environment
