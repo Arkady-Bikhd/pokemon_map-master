@@ -14,8 +14,6 @@ DEFAULT_IMAGE_URL = (
     '&fill=transparent'
 )
 
-MOSCOW_TIME_ZONE = 3  # Не знаю, как программно определить часовой пояс
-
 
 def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
     icon = folium.features.CustomIcon(
@@ -32,21 +30,19 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 def show_all_pokemons(request):
 
-    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    pokemons = Pokemon.objects.all()
-    current_time = localtime()
-    for pokemon in pokemons:
-        pokemon_entities = pokemon.entities.filter(
-            appeared_at__lt=current_time, disappeared_at__gt=current_time)
-        for pokemon_entity in pokemon_entities:
-            add_pokemon(
-                folium_map, pokemon_entity.latitude,
-                pokemon_entity.longitude,
-                request.build_absolute_uri(
-                    pokemon_entity.pokemon.image.url
-                )
+    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)    
+    current_time = localtime()    
+    pokemon_entities = PokemonEntity.objects.filter(
+        appeared_at__lt=current_time, disappeared_at__gt=current_time).all()
+    for pokemon_entity in pokemon_entities:
+        add_pokemon(
+            folium_map, pokemon_entity.latitude,
+            pokemon_entity.longitude,
+            request.build_absolute_uri(
+                pokemon_entity.pokemon.image.url
             )
-
+        )
+    pokemons = Pokemon.objects.all()
     pokemons_on_page = list()
     for pokemon in pokemons:
         pokemons_on_page.append(form_pokemon_on_page(pokemon, request))

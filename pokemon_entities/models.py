@@ -27,15 +27,15 @@ class PokemonEntity(models.Model):
     disappeared_at = models.DateTimeField(
         null=True, blank=True, verbose_name='Время исчезновения')
     level = models.IntegerField(
-        null=True, default=None, blank=True, verbose_name='Уровень')
+        null=True, blank=True, verbose_name='Уровень')
     health = models.IntegerField(
-        null=True, default=None, blank=True, verbose_name='Здоровье')
+        null=True, blank=True, verbose_name='Здоровье')
     strength = models.IntegerField(
-        null=True, default=None, blank=True, verbose_name='Сила')
+        null=True, blank=True, verbose_name='Сила')
     defence = models.IntegerField(
-        null=True, default=None, blank=True, verbose_name='Защита')
+        null=True, blank=True, verbose_name='Защита')
     stamina = models.IntegerField(
-        null=True, default=None, blank=True, verbose_name='Выносливость')
+        null=True, blank=True, verbose_name='Выносливость')
 
     def __str__(self):
         return self.pokemon.title
